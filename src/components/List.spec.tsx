@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { List } from "./List";
 
@@ -17,5 +17,21 @@ describe("List component test", () => {
 
     expect(getByText("Lourival")).toBeDefined();
     expect(queryByText("Maick")).toBeNull();
+  });
+
+  it("should be able to add new item to the list", async () => {
+    const { getByText, getByPlaceholderText } = render(
+      <List initialItems={[]} />
+    );
+
+    const inputElement = getByPlaceholderText("Novo item");
+    const addButton = getByText("Adicionar");
+
+    fireEvent.change(inputElement, { target: { value: "Novo" } });
+    fireEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(getByText("Novo")).toBeDefined();
+    });
   });
 });
