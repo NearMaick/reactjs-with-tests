@@ -3,9 +3,13 @@ import { describe, expect, it } from "vitest";
 import { List } from "./List";
 
 describe("List component test", () => {
-  it("should render", () => {
-    const { getByText } = render(<List />);
+  it("should render list items", () => {
+    const { getByText } = render(
+      <List initialItems={["Maick", "Neuza", "Enilda"]} />
+    );
 
-    expect(getByText("Maick Souza")).toBeDefined();
+    expect(getByText("Enilda")).toBeDefined();
+    expect(getByText("Neuza")).toBeDefined();
+    expect(getByText("Maick")).toBeDefined();
   });
 });

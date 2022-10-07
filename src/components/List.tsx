@@ -1,7 +1,13 @@
-export function List() {
+interface ListProps {
+  initialItems: string[];
+}
+
+export function List({ initialItems }: ListProps) {
   return (
     <div>
-      <h1>Maick Souza</h1>
+      {initialItems.map((item) => (
+        <h1 key={item}>{item}</h1>
+      ))}
     </div>
   );
 }
