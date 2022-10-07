@@ -1,4 +1,9 @@
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { List } from "./List";
 
@@ -33,5 +38,17 @@ describe("List component test", () => {
     await waitFor(() => {
       expect(getByText("Novo")).toBeDefined();
     });
+  });
+
+  it("should be able to remove item to the list", async () => {
+    const { getAllByText, queryByText } = render(
+      <List initialItems={["Maick"]} />
+    );
+
+    const removeButtons = getAllByText("Remover");
+
+    fireEvent.click(removeButtons[0]);
+
+    await waitForElementToBeRemoved(() => queryByText("Maick"));
   });
 });
